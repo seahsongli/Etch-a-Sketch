@@ -14,6 +14,7 @@ const rows = 16;
 const cols = 16;
 makeRows(rows,cols);
 
+//add event to all cells when hovering
 let cells = document.querySelectorAll("#cell")
 cells.forEach(cells=>cells.addEventListener("mouseenter", function(e){
     cells.classList.add("playing");
