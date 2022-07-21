@@ -5,50 +5,45 @@ function populateGrid(rows, cols){
         let cell= document.createElement('div');
         cell.setAttribute("id", "cell");
         container.append(cell);
-        cell.addEventListener("mousedown", hovering);
-        cell.addEventListener("mouseover", hovering);
+        hovering();
     }
+    
     wholeGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     wholeGrid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
     
 }
    
-
-// const container = document.querySelector("#container");
-// container.classList.add("container");
-
-// function makeRows(rows, cols){
-//     for(i=0;i < rows*cols;i ++){
-//         let cell= document.createElement('div');
-//         cell.setAttribute("id", "cell")
-//         container.append(cell);
-        
-//     }
-    
-// }
 populateGrid(16,16);
 
-//add event to all cells when hovering
 
-function hovering(event){
+//add event to all cells when hovering
+function hovering(){
     const cells = document.querySelectorAll("#cell");
-    cells.forEach(cells => cells.addEventListener("dragover", function (e){
-        event.preventDefault();
-        cells.classList.add("playing")
-    }));
+    cells.forEach(cells => {
+        cells.addEventListener("mousedown", () => {
+            cells.style.backgroundColor = generateRandomColor();
+        },
+
+        cells.addEventListener("mouseover", (event) => {
+            if (event.buttons == 1){
+                cells.style.backgroundColor = generateRandomColor();
+            }
+        }))
+    })
 };
 
-// function hovering(event){
-//     const cells = document.querySelectorAll("#cell");
-//     if (event.type == "mouseover" && event.type !== "mousedown"){
-//         return;
-//     }
-//     else {
-//         cells.forEach(cells => cells.addEventListener("mouseover", function(e){
-//             cells.classlist.add("playing");
-//         }))
-//         };
-//     }
+
+//function to generate random rgb colors
+function generateRandomColor() {
+    let red = Math.floor(Math.random()*255) + 1;
+    let blue = Math.floor(Math.random()*255) + 1;
+    let green = Math.floor(Math.random()*255) + 1;
+    var bgColor = "rgb(" + red + "," + blue + "," + green + ")";
+    return bgColor;
+}
+
+
+
 //To set button1 for changing of grid size
 let button1 = document.querySelector("#button1");
 button1.addEventListener("click", changeSize);
@@ -63,7 +58,7 @@ function changeSize(rows,cols){
         let cells = document.querySelectorAll("#cell");
         cells.forEach((div) =>div.remove());
         let newCols = newRow;
-        hovering(event)
+        hovering()
         return populateGrid(newRow,newCols);
 
     }
@@ -76,9 +71,11 @@ button2.addEventListener("click",reset);
 button2.innerHTML = "Reset";
 function reset(){
     let cells = document.querySelectorAll("#cell");
-    cells.forEach(cell => cell.classList.remove('playing'));
+    cells.forEach(cells => cells.style.backgroundColor = "")
 };
 
 
-let button3 = document.querySelector("#button3");
+
+
+
 
